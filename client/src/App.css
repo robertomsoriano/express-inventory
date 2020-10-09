@@ -1,0 +1,74 @@
+*{
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,body{
+  max-width: 100%;
+  font-size: 16px;
+  /* background: rgba(211, 211, 211, 0.144); */
+}
+.remove-btn {
+  margin-right: 0.5rem;
+}
+
+.fade-enter {
+  opacity: 0.01;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 1000ms ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0.01;
+  transition: opacity 1000ms ease-in;
+}
+/* -------------------------------------------- */
+.spinner{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  height: 80%;
+  width: 100%;
+}
+.spinner div{
+  width:5rem;
+  height: 5rem;
+}
+
+.dropdown-item a {
+  color: black !important
+}
+
+.trans-container{
+  background: rgba(211, 211, 211, 0.144);
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  display:grid;
+  /* grid-template-columns: 1fr 1fr;  */
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-gap: 1em;
+  grid-auto-rows: minmax(100px, auto);
+}
+.trans-card:hover{
+  /* margin: 100px 100px; */
+  transform: translate(-2px, -2px)
+}
+
+.login-modal {
+  display: inline-block !important;
+  padding: 0px !important;
+}
+.delete{
+  background: none !important;
+  border: none !important;
+}

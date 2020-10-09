@@ -1,2 +1,1 @@
-# express-inventory
-Created with CodeSandbox
+# Book Invetory App
