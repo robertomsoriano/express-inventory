@@ -3,26 +3,11 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const TransactionSchema = new Schema({
-  seller: {
-    type: String,
-    required: true
-  },
-  assistant: {
-    type: String,
-    required: true
+  operator: {
+    type: String
   },
   customer: {
     type: Object
-    // Don't required customer data for now
-    // ,required: true
-  },
-  sale_date: {
-    type: Date,
-    default: Date.now
-  },
-  invoice_number: {
-    type: String,
-    default: Date.now()
   },
   items: {
     type: [Object]
@@ -39,7 +24,6 @@ const TransactionSchema = new Schema({
   },
   taxes: {
     type: Number,
-    required: true
   },
   total: {
     type: Number,
@@ -51,6 +35,14 @@ const TransactionSchema = new Schema({
   },
   message: {
     type: String
+  },
+  transac_date: {
+    type: Date,
+    default: Date.now
+  },
+  invoice_number: {
+    type: String,
+    default: Date.now()
   },
   user: {
     type: String,
