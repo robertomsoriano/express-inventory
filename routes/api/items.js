@@ -13,7 +13,18 @@ router.get('/', (req, res) => {
     .sort({ date: -1 })
     .then(items => res.json(items));
 });
-
+// @route   GET api/items/:id
+// @desc    Get single item
+// @access  Public
+router.get("/:id", (req, res) => {
+  Item.findById(req.params.id, (err, item) => {
+    if (err)
+      return res
+        .status(404)
+        .json({ msg: "Request Not Valid, Item Not Found." });
+    res.json(item);
+  });
+});
 // @route   POST api/items
 // @desc    Create An Item
 // @access  Private

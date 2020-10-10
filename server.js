@@ -32,8 +32,8 @@ const options = {
   useFindAndModify: false,
   useNewUrlParser: true,
   useCreateIndex: true,
-  reconnectTries: 30, // Retry up to 30 times
-  reconnectInterval: 500, // Reconnect every 500ms
+  // reconnectTries: 30, // Retry up to 30 times
+  // reconnectInterval: 500, // Reconnect every 500ms
   poolSize: 10, // Maintain up to 10 socket connections
   // If not connected, return errors immediately rather than waiting for reconnect
   bufferMaxEntries: 0
@@ -74,12 +74,12 @@ connectWithRetry();
 
 // Use Routes
 app.use("/api/auth", require("./routes/api/auth"));
-app.use("/api/items", require("./routes/api/items"));
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/books", require("./routes/api/books"));
 app.use("/api/cart", require("./routes/api/cart"));
 app.use("/api/checkout", require("./routes/api/checkout"));
 app.use("/api/transactions", require("./routes/api/transactions"));
+app.use("/api/items", require("./routes/api/items"));
 
 // Serve static assets if in production
 // if (process.env.NODE_ENV === "production") {
