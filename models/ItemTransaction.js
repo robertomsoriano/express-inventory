@@ -47,6 +47,10 @@ const ItemTransactionSchema = new Schema({
     type: String,
     default: Date.now()
   },
+  transac_status: {
+    type: String,
+    default: "reconciled"
+  },
   user: {
     type: String,
     required: true

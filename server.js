@@ -82,7 +82,7 @@ app.use("/api/transactions", require("./routes/api/transactions"));
 app.use("/api/items", require("./routes/api/items"));
 app.use("/api/vehicles", require("./routes/api/vehicles"));
 app.use("/api/cart-items", require("./routes/api/cartItems"));
-
+app.use("/api/item-checkout", require("./routes/api/itemTransactions"));
 // Serve static assets if in production
 // if (process.env.NODE_ENV === "production") {
 //   // Set static folder
