@@ -3,10 +3,10 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const ItemTransactionSchema = new Schema({
-  transac_operator: {
+  transac_type: {
     type: String
   },
-  transac_type: {
+  transac_operator: {
     type: String
   },
   transac_customer: {

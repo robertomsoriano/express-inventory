@@ -10,7 +10,7 @@ const Item = require("../../models/Item");
 
 router.post("/", auth, (req, res) => {
     // Checkout submission will log a trasaction
-    const newTransaction = new Transaction({
+    const newTransaction = new ItemTransaction({
         transac_type: req.body.transaction.transac_type,
         transac_operator: req.body.transaction.transac_operator,
         // Don't required customer data for now
