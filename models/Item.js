@@ -24,13 +24,17 @@ const ItemSchema = new Schema({
   },
   item_quantity: {
     type: Number,
-    min: 0
+    min: 0,
+    required: true,
+    default: 0
   },
   item_desc: {
-    type: String
+    type: String,
+    default: 'please enter value'
   },
   item_image: {
-    type: String
+    type: String,
+    default: 'please enter value'
   },
   user: {
     type: String
