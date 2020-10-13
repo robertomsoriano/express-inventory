@@ -75,8 +75,6 @@ connectWithRetry();
 // Use Routes
 app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/users", require("./routes/api/users"));
-app.use("/api/books", require("./routes/api/books"));
-app.use("/api/cart", require("./routes/api/cart"));
 app.use("/api/checkout", require("./routes/api/checkout"));
 app.use("/api/transactions", require("./routes/api/transactions"));
 app.use("/api/items", require("./routes/api/items"));
