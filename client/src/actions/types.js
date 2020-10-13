@@ -1,5 +1,5 @@
 // AUTH
-export const TOKEN = "BOOKSTORE_TOKEN";
+export const TOKEN = "EXPRESS-INVENTORY_TOKEN";
 // Items
 export const GET_ITEMS = "GET_ITEMS";
 export const ADD_ITEM = "ADD_ITEM";

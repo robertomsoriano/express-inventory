@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import {
   Collapse,
   Navbar,
@@ -19,7 +19,7 @@ import PropTypes from "prop-types";
 import RegisterModal from "./auth/RegisterModal";
 import LoginModal from "./auth/LoginModal";
 import Logout from "./auth/Logout";
-import {setCart} from '../actions/cartActions'
+import { setCart } from '../actions/cartActions'
 
 class AppNavbar extends Component {
   state = {
@@ -29,8 +29,8 @@ class AppNavbar extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired
   };
-  componentDidMount(){
-    this.props.setCart()
+  componentDidMount() {
+    console.log(this.props.cart)
   }
 
   toggle = () => {
@@ -38,18 +38,18 @@ class AppNavbar extends Component {
       isOpen: !this.state.isOpen
     });
   };
-  cartTotal(){
-    if(this.props.cart.cart.length){
-      
+  cartTotal() {
+    if (this.props.cart.cart.length) {
+
       let quant = this.props.cart.cart.map(book => book.item_total);
       quant = quant.reduce((acc, curr) => acc + curr);
       let result = Math.round(quant * 100) / 100;
-      return <i style={{color:'coral'}}> Subtotal: ${result}</i>
+      return <i style={{ color: 'coral' }}> Subtotal: ${result}</i>
     }
     return
   }
-  cartQuantity(){
-    if(this.props.cart.cart.length){
+  cartQuantity() {
+    if (this.props.cart.cart.length) {
       let quant = this.props.cart.cart.map(book => book.quantity);
       quant = quant.reduce((acc, curr) => acc + curr);
       return quant
@@ -73,8 +73,8 @@ class AppNavbar extends Component {
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink onClick={() => this.props.history.push("/books")}>
-            Books
+          <NavLink onClick={() => this.props.history.push("/parts")}>
+            Parts
           </NavLink>
         </NavItem>
 
@@ -86,7 +86,7 @@ class AppNavbar extends Component {
           <DropdownMenu right>
             <DropdownItem className='dropdown-item'>
               <NavLink onClick={() => this.props.history.push("/cart")}>
-                <i className="fa fa-shopping-cart">Cart{this.props.cart.cart.length >0 && `(${this.cartQuantity()}):`} {this.cartTotal()}</i>
+                <i className="fa fa-shopping-cart">Cart{this.props.cart.cart.length > 0 && `(${this.cartQuantity()}):`} {this.cartTotal()}</i>
               </NavLink>
             </DropdownItem>
             <DropdownItem divider />
@@ -108,7 +108,7 @@ class AppNavbar extends Component {
         <NavItem>
           <RegisterModal />
         </NavItem>
-        <NavItem style={{marginLeft:'.5rem'}}>
+        <NavItem style={{ marginLeft: '.5rem' }}>
           <LoginModal />
         </NavItem>
       </Fragment>
@@ -118,7 +118,7 @@ class AppNavbar extends Component {
       <div>
         <Navbar color="dark" dark expand="sm" className="mb-5">
           <Container>
-            <NavbarBrand href="/">Sendas Antiguas</NavbarBrand>
+            <NavbarBrand href="/">Express Inventory</NavbarBrand>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
@@ -134,10 +134,10 @@ class AppNavbar extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  cart: state.cart
+  cart: state.cartItems
 });
 
 export default connect(
   mapStateToProps,
-  {setCart}
+  { setCart }
 )(withRouter(AppNavbar));

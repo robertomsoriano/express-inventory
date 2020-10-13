@@ -1,17 +1,17 @@
 import { combineReducers } from "redux";
-import itemReducer from "./itemReducer";
+import itemsReducer from "./itemsReducer";
 import errorReducer from "./errorReducer";
 import authReducer from "./authReducer";
 import bookReducer from "./booksReducer";
-import cartReducer from "./cartReducer";
+import cartItemsReducer from "./cartItemsReducer";
 import transReducer from './transReducer'
 import checkoutReducer from './checkoutReducer'
 export default combineReducers({
-  item: itemReducer,
+  items: itemsReducer,
   error: errorReducer,
   auth: authReducer,
   book: bookReducer,
-  cart: cartReducer,
-  trans:transReducer,
+  cartItems: cartItemsReducer,
+  trans: transReducer,
   checkout: checkoutReducer,
 });
