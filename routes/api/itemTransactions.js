@@ -47,14 +47,17 @@ router.post("/", auth, (req, res) => {
 // @desc    Revert item-transactions
 // @access  Private
 
-router.put("/revert/:invoice_number", auth, (req, res) => {
+router.put("/revert/:invoice_number", auth, async (req, res) => {
   // Checkout submission will log a trasaction
-  let transactionObj = ItemTransaction.findOne({
+  let transactionObj = await ItemTransaction.findOne({
     invoice_number: req.params.invoice_number
   });
   try {
+    if (transactionObj.transac_status !== "reconciled") {
+      throw new Error("Transaction is not valid");
+    }
     // Re-stock Inventory
-    req.body.transaction.transac_items.map((itemProcessing) => {
+    transactionObj.transac_items.map((itemProcessing) => {
       Item.findById(itemProcessing._id, (err, ItemToUpdate) => {
         ItemToUpdate.item_quantity =
           ItemToUpdate.item_quantity + itemProcessing.item_quantity;
@@ -67,7 +70,7 @@ router.put("/revert/:invoice_number", auth, (req, res) => {
     return;
   } catch (err) {
     return res.status(425).json({
-      msg: "Transaction not valid. Are you ordering more books than available?"
+      msg: "Transaction reversal not completed."
     });
   }
 });

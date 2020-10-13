@@ -11,10 +11,7 @@ const CartItem = require("../../models/CartItem");
 const checkStock = async (itemID, quantityRequested) => {
   let itemToCheck = await Item.findById(itemID);
   let quantityInCart = await CartItem.findById(itemID);
-  console.log(
-    await `${itemToCheck.item_quantity}---------- ${quantityInCart.item_quantity}`
-  );
-  return (await itemToCheck.item_quantity) >= quantityRequested + quantityInCart
+  return (await itemToCheck.item_quantity) > quantityInCart.item_quantity
     ? true
     : false;
 };
@@ -46,9 +43,6 @@ router.put("/add", auth, async (req, res) => {
       (await checkStock(req.body.item.item_id, req.body.item.item_quantity)) ===
       true
     ) {
-      console.log(
-        await checkStock(req.body.item.item_id, req.body.item.item_quantity)
-      );
       await CartItem.findOneAndUpdate(
         { _id: req.body.item.item_id, user: req.user.id },
         {
