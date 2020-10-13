@@ -1,6 +1,7 @@
 import {
     GET_ITEMS,
     ADD_ITEM,
+    EDIT_ITEM,
     DELETE_ITEM,
     ITEMS_LOADING
 } from '../actions/types';
@@ -24,9 +25,11 @@ export default function (state = initialState, action) {
                 items: state.items.filter(item => item._id !== action.payload)
             };
         case ADD_ITEM:
+        case EDIT_ITEM:
             return {
                 ...state,
-                items: [action.payload, ...state.items]
+                items: [action.payload, ...state.items],
+                loading: false
             };
         case ITEMS_LOADING:
             return {

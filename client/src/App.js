@@ -16,6 +16,7 @@ import MyNavbar from "./components/MyNavbar";
 import ItemsList from "./components/items/ItemsList";
 import { Container } from "reactstrap";
 import { Spinner } from "react-bootstrap";
+import EditItem from './components/items/EditItem';
 
 export const App = () => {
     const dispatch = useDispatch()
@@ -52,6 +53,11 @@ export const App = () => {
                 <Container>
                     <Switch>
                         <Route path="/" exact render={() => <ItemsList />} />
+                        <Route
+                            path="/edit/:id"
+                            exact
+                            render={(props) => <EditItem {...props} />}
+                        />
                     </Switch>
                 </Container>
             </div>

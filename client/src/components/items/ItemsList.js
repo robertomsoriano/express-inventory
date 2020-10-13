@@ -15,9 +15,10 @@ import {
 } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
-// import AddBookModal from "./AddBookModal";
+// import AddItem from "./AddItem";
 
 import Swal from "sweetalert2";
+import AddItem from "./AddItem";
 const ItemsList = (props) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -147,6 +148,7 @@ const ItemsList = (props) => {
             </ListGroup>
           </Container>
         }
+        <AddItem />
       </>
     );
 };
