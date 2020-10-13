@@ -12,6 +12,9 @@ const ItemTransactionSchema = new Schema({
   transac_customer: {
     type: Object
   },
+  transac_vehicle: {
+    type: String
+  },
   transac_items: {
     type: [Object]
   },

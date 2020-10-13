@@ -15,6 +15,8 @@ router.post("/", auth, (req, res) => {
     transac_operator: req.body.transaction.transac_operator,
     // Don't required customer data for now
     transac_customer: req.body.transaction.transac_customer,
+
+    transac_vehicle: req.body.transaction.transac_vehicle,
     transac_items: req.body.transaction.transac_items,
     sale_transac: req.body.transaction.sale_transac,
     transac_subtotal: req.body.transaction.transac_subtotal,
@@ -75,8 +77,10 @@ router.put("/revert/:invoice_number", auth, async (req, res) => {
   }
 });
 
-// @route   POST api/item-checkout
-// @desc    GET user all  Transactions
+// Leave Public?? TO-DO!!!!
+
+// @route   GET api/item-checkout
+// @desc    GET all  Transactions
 // @access  Private
 router.get("/", (req, res) => {
   // ItemTransaction.find({ user: req.user.id })
