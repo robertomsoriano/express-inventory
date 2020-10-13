@@ -30,9 +30,8 @@ export const setCart = () => (dispatch, getState) => {
 
 export const increaseQuantity = item => (dispatch, getState) => {
     dispatch(setCartLoading());
-    // Object.assign(item, { book_id: item._id });
     axios
-        .put(`/api/cart-items/add`, { item }, tokenConfig(getState))
+        .put(`/api/cart-items/add`, { item: { ...item } }, tokenConfig(getState))
         .then(res => {
             dispatch({
                 type: UPDATE_CART_ITEM,
@@ -46,9 +45,8 @@ export const increaseQuantity = item => (dispatch, getState) => {
 
 export const decreaseQuantity = item => (dispatch, getState) => {
     dispatch(setCartLoading());
-    Object.assign(item, { book_id: item._id });
     axios
-        .put(`/api/cart/decrease`, { book: item }, tokenConfig(getState))
+        .put(`/api/cart/decrease`, { item: { ...item } }, tokenConfig(getState))
         .then(res => {
             dispatch({
                 type: UPDATE_CART_ITEM,
