@@ -30,8 +30,9 @@ export const setCart = () => (dispatch, getState) => {
 
 export const increaseQuantity = (item) => (dispatch, getState) => {
   dispatch(setCartLoading());
+
   axios
-    .put(`/api/cart-items/add`, { item: { ...item } }, tokenConfig(getState))
+    .put(`/api/cart-items/add`, { item }, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: UPDATE_CART_ITEM,

@@ -40,11 +40,11 @@ router.put("/add", auth, async (req, res) => {
   try {
     // Check if enough stock first
     if (
-      (await checkStock(req.body.item.item_id, req.body.item.item_quantity)) ===
+      (await checkStock(req.body.item._id, req.body.item.item_quantity)) ===
       true
     ) {
       await CartItem.findOneAndUpdate(
-        { _id: req.body.item.item_id, user: req.user.id },
+        { _id: req.body.item._id, user: req.user.id },
         {
           $inc: { item_quantity: 1 },
           item_name: req.body.item.item_name,

@@ -2,14 +2,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 // const config = require("config");
-// const cors = require("cors");
+const cors = require("cors");
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 const app = express();
 // Allow cross-origin
-// app.use(cors());
-// app.options("*", cors());
+app.use(cors());
+app.options("*", cors());
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   next();

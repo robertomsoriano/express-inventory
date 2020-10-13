@@ -13,7 +13,6 @@ import "./components/checkout/invoice.css";
 
 // Components
 import MyNavbar from "./components/MyNavbar";
-import BooksSearch from "./components/books/BooksSearch";
 import ItemsList from "./components/items/ItemsList";
 import { Container } from "reactstrap";
 import { Spinner } from "react-bootstrap";

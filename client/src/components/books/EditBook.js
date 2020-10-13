@@ -47,25 +47,25 @@ const EditBook = props => {
     }
     fetchData();
   }, [
-    book._id,
-    book.author,
-    book.description,
-    book.name,
-    book.pic,
-    book.price,
-    book.sale_price,
-    book.disc_price,
-    book.quantity,
-    book.subtitle,
-    bookId,
-    props.error
-  ]);
+      book._id,
+      book.author,
+      book.description,
+      book.name,
+      book.pic,
+      book.price,
+      book.sale_price,
+      book.disc_price,
+      book.quantity,
+      book.subtitle,
+      bookId,
+      props.error
+    ]);
 
   const handleUpdate = (e, bookId) => {
     Swal.fire({
       title: 'Are you sure?',
       text: "Do you want to update this item?",
-      type: 'question',
+      icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
@@ -96,7 +96,7 @@ const EditBook = props => {
     Swal.fire({
       title: 'Are you sure?',
       text: "Do you want to delete item from cart?",
-      type: 'warning',
+      icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
@@ -106,7 +106,7 @@ const EditBook = props => {
         Swal.fire({
           title: 'Please contact admin',
           text: "Deleting books is not allowed.",
-          type: 'error',
+          icon: 'error',
           confirmButtonColor: '#3085d6'
         })
         // props.deleteBook(bookId)
@@ -126,119 +126,119 @@ const EditBook = props => {
       </div>
     </>
   ) : (
-    <>
-      {props.error.msg.msg && (
-        <Alert color="danger">{props.error.msg.msg}</Alert>
-      )}
-      <div className="edit-container" style={{ margin: "3rem" }}>
-        <div className="form-group edit-container-form">
-          <br />
-          <br />
-          <h2 className="edit-header">{newName}</h2>
-          <ListGroupItem>
-            <h5>Title</h5>
-            <Input
-              className=" form-control col-xs-2"
-              placeholder="update book title"
-              value={`${newName}`}
-              onChange={e => setNewName(e.target.value)}
-            />
-            <h5>Subtitle</h5>
-            <Input
-              className=" form-control col-xs-2"
-              placeholder="update book subtitle"
-              value={`${newSubtitle}`}
-              onChange={e => setNewSubtitle(e.target.value)}
-            />
-            <h5>Author</h5>
-            <Input
-              className=" form-control col-xs-2"
-              placeholder="update book author"
-              value={`${newAuthor}`}
-              onChange={e => setNewAuthor(e.target.value)}
-            />
-            <h5>Description</h5>
-            <Input
-              className=" form-control col-xs-2"
-              placeholder="update book description"
-              value={`${newDescription}`}
-              onChange={e => setNewDescription(e.target.value)}
-            />
-            <h5>Price</h5>
-            <Input
-              className=" form-control col-xs-2"
-              placeholder="update book price"
-              type="text"
-              value={`${newPrice}`}
-              onChange={e => setNewPrice(e.target.value)}
-            />
-            <h5>Sale Price</h5>
-            <Input
-              className=" form-control col-xs-2"
-              placeholder="update book sale price"
-              type="text"
-              value={`${newSalePrice}`}
-              onChange={e => setNewSalePrice(e.target.value)}
-            />
-            <h5>Disc Price</h5>
-            <Input
-              className=" form-control col-xs-2"
-              placeholder="update book Disc price"
-              type="text"
-              value={`${newDiscPrice}`}
-              onChange={e => setNewDiscPrice(e.target.value)}
-            />
-            <h5>Quantity</h5>
-            <button
-              className="minus btn btn-info outline"
-              onClick={e => setNewQuantity(newQuantity => newQuantity - 1)}
-            >
-              -
-            </button>
-            <input type="text" value={`${newQuantity}`} readOnly />
-            <button
-              className="plus btn btn-info outline"
-              onClick={e => setNewQuantity(newQuantity => newQuantity + 1)}
-            >
-              +
-            </button>
-            <h5>Image</h5>
-            <Input
-              className=" form-control col-xs-2"
-              placeholder="update book image"
-              value={`${newPic}`}
-              onChange={e => setNewPic(e.target.value)}
-            />
+      <>
+        {props.error.msg.msg && (
+          <Alert color="danger">{props.error.msg.msg}</Alert>
+        )}
+        <div className="edit-container" style={{ margin: "3rem" }}>
+          <div className="form-group edit-container-form">
             <br />
-            <Button
-              color="secondary"
-              outline
-              size="sm"
-              onClick={e => handleUpdate(e, bookId)}
-            >
-              Update Book
+            <br />
+            <h2 className="edit-header">{newName}</h2>
+            <ListGroupItem>
+              <h5>Title</h5>
+              <Input
+                className=" form-control col-xs-2"
+                placeholder="update book title"
+                value={`${newName}`}
+                onChange={e => setNewName(e.target.value)}
+              />
+              <h5>Subtitle</h5>
+              <Input
+                className=" form-control col-xs-2"
+                placeholder="update book subtitle"
+                value={`${newSubtitle}`}
+                onChange={e => setNewSubtitle(e.target.value)}
+              />
+              <h5>Author</h5>
+              <Input
+                className=" form-control col-xs-2"
+                placeholder="update book author"
+                value={`${newAuthor}`}
+                onChange={e => setNewAuthor(e.target.value)}
+              />
+              <h5>Description</h5>
+              <Input
+                className=" form-control col-xs-2"
+                placeholder="update book description"
+                value={`${newDescription}`}
+                onChange={e => setNewDescription(e.target.value)}
+              />
+              <h5>Price</h5>
+              <Input
+                className=" form-control col-xs-2"
+                placeholder="update book price"
+                type="text"
+                value={`${newPrice}`}
+                onChange={e => setNewPrice(e.target.value)}
+              />
+              <h5>Sale Price</h5>
+              <Input
+                className=" form-control col-xs-2"
+                placeholder="update book sale price"
+                type="text"
+                value={`${newSalePrice}`}
+                onChange={e => setNewSalePrice(e.target.value)}
+              />
+              <h5>Disc Price</h5>
+              <Input
+                className=" form-control col-xs-2"
+                placeholder="update book Disc price"
+                type="text"
+                value={`${newDiscPrice}`}
+                onChange={e => setNewDiscPrice(e.target.value)}
+              />
+              <h5>Quantity</h5>
+              <button
+                className="minus btn btn-info outline"
+                onClick={e => setNewQuantity(newQuantity => newQuantity - 1)}
+              >
+                -
+            </button>
+              <input type="text" value={`${newQuantity}`} readOnly />
+              <button
+                className="plus btn btn-info outline"
+                onClick={e => setNewQuantity(newQuantity => newQuantity + 1)}
+              >
+                +
+            </button>
+              <h5>Image</h5>
+              <Input
+                className=" form-control col-xs-2"
+                placeholder="update book image"
+                value={`${newPic}`}
+                onChange={e => setNewPic(e.target.value)}
+              />
+              <br />
+              <Button
+                color="secondary"
+                outline
+                size="sm"
+                onClick={e => handleUpdate(e, bookId)}
+              >
+                Update Book
             </Button>
-            <Button
-              color="secondary"
-              outline
-              size="sm"
-              onClick={e => handleDelete(e, bookId)}
-            >
-              Delete Book
+              <Button
+                color="secondary"
+                outline
+                size="sm"
+                onClick={e => handleDelete(e, bookId)}
+              >
+                Delete Book
             </Button>
-          </ListGroupItem>
-        </div>
-        <div className="edit-container-img">
-          <img src={`${newPic}`} alt={newName} width="300px" height="300px" />
-          <div className="edit-container-link" style={{ marginTop: "1rem" }}>
-            <Button color="dark" href="/books" block>
-              Go Back to Book List
+            </ListGroupItem>
+          </div>
+          <div className="edit-container-img">
+            <img src={`${newPic}`} alt={newName} width="300px" height="300px" />
+            <div className="edit-container-link" style={{ marginTop: "1rem" }}>
+              <Button color="dark" href="/books" block>
+                Go Back to Book List
             </Button>
+            </div>
           </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
 };
 
 const mapStateToProps = state => ({

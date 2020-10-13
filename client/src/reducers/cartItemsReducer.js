@@ -15,14 +15,14 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case UPDATE_CART_ITEM:
-      if (window.location.pathname === "/") {
+      if (window.location.pathname !== "/cart") {
         Swal.fire({
           position: "top-end",
           title: "Success",
           text: "Book added to cart!",
           showConfirmButton: false,
           timer: 1200,
-          type: "success",
+          icon: "success",
           footer: '<a href="/cart">Go to cart</a>'
         });
       }
@@ -44,7 +44,7 @@ export default function (state = initialState, action) {
           text: "Book removed!",
           showConfirmButton: false,
           timer: 1000,
-          type: "info",
+          icon: "info",
           footer: '<a href="/books">Go to books</a>'
         });
       }
