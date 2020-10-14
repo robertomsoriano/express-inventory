@@ -100,7 +100,6 @@ router.put("/update/:vehicleID", auth, (req, res) => {
     !vehicle_model ||
     !vehicle_year ||
     !vehicle_state ||
-    !vehicle_desc ||
     !vehicle_image
   ) {
     return res.status(400).json({

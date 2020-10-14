@@ -17,6 +17,7 @@ import ItemsList from "./components/items/ItemsList";
 import { Container } from "reactstrap";
 import { Spinner } from "react-bootstrap";
 import EditItem from './components/items/EditItem';
+import EditVehicle from './components/vehicles/EditVehicle';
 
 export const App = () => {
     const dispatch = useDispatch()
@@ -54,7 +55,12 @@ export const App = () => {
                     <Switch>
                         <Route path="/" exact render={() => <ItemsList />} />
                         <Route
-                            path="/edit/:id"
+                            path="/vehicle/edit/:id"
+                            exact
+                            render={(props) => <EditVehicle {...props} />}
+                        />
+                        <Route
+                            path="/item/edit/:id"
                             exact
                             render={(props) => <EditItem {...props} />}
                         />

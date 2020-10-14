@@ -97,7 +97,7 @@ const ItemsList = (props) => {
                                   <>
                                     <Link
                                       to={{
-                                        pathname: `/edit/${item._id}`,
+                                        pathname: `/item/edit/${item._id}`,
                                         state: { item }
                                       }}
                                     >
