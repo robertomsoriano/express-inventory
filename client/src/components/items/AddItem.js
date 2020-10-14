@@ -46,9 +46,7 @@ const AddItem = (props) => {
             item_image: newPic
         }));
     };
-    console.log(state)
     useEffect(() => {
-        console.log(state.items)
         setNewType("part")
         setNewName("");
         setNewNumber("")
@@ -61,7 +59,6 @@ const AddItem = (props) => {
 
 
     useEffect(() => {
-        console.log(state.items)
         clearErrors()
         // eslint-disable-next-line
     }, [state.errors]);

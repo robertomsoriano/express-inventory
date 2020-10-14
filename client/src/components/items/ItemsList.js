@@ -19,6 +19,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import Swal from "sweetalert2";
 import AddItem from "./AddItem";
+import VehicleList from "../vehicles/VehicleList";
 const ItemsList = (props) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -50,14 +51,15 @@ const ItemsList = (props) => {
     <>
       <Container>
         <h2>You have no Items!</h2>
-        <h6>Add a book to your list.</h6>
+        <h6>Add a Items to your list.</h6>
       </Container>
     </>
   ) : (
       <>
+        <VehicleList />
         {
           <Container style={{ marginTop: "5rem" }}>
-            <h2>Available Books</h2>
+            <h2>{`Available Parts & Services`}</h2>
             <ListGroup>
               <TransitionGroup className="shopping-list">
                 <CSSTransition timeout={0} classNames="fade">

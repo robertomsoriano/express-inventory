@@ -6,6 +6,12 @@ export const ADD_ITEM = "ADD_ITEM";
 export const EDIT_ITEM = "EDIT_ITEM";
 export const DELETE_ITEM = "DELETE_ITEM";
 export const ITEMS_LOADING = "ITEMS_LOADING";
+// Vehicles
+export const GET_VEHICLES = "GET_VEHICLES";
+export const ADD_VEHICLE = "ADD_VEHICLE";
+export const EDIT_VEHICLE = "EDIT_VEHICLE";
+export const DELETE_VEHICLE = "DELETE_VEHICLE";
+export const VEHICLES_LOADING = "VEHICLES_LOADING";
 // Users
 export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";

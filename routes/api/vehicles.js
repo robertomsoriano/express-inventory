@@ -72,7 +72,7 @@ router.post("/", auth, (req, res) => {
     user: req.user.id
   });
 
-  newVehicle.save().then((vehicle) => res.json(vehicle));
+  newVehicle.save().then((vehicle) => res.json(vehicle)).catch(err => res.status(404).json({ msg: "Vehicle could not be added." }))
 });
 
 // @route   PUT api/vehicles/:id
@@ -96,12 +96,9 @@ router.put("/update/:vehicleID", auth, (req, res) => {
     // Which values should be required for vehicle update? TO-DO!!
     !vehicle_type ||
     !vehicle_name ||
-    !vehicle_number ||
     !vehicle_make ||
     !vehicle_model ||
     !vehicle_year ||
-    !vehicle_mileage ||
-    !vehicle_lastOilChange ||
     !vehicle_state ||
     !vehicle_desc ||
     !vehicle_image
@@ -129,9 +126,9 @@ router.put("/update/:vehicleID", auth, (req, res) => {
       (vehicle.vehicle_desc = vehicle_desc),
       (vehicle.vehicle_image = vehicle_image);
 
-    vehicle.save();
-    res.json(vehicle);
-  });
+    vehicle.save().then(item => res.json(item)).catch(err => res.status(404).json({ msg: "Vehicle could not be added." }))
+    // res.json(vehicle);
+  }).catch(err => res.status(404).json({ msg: "Vehicle could not be added." }))
 });
 
 // @route   DELETE api/vehicles/:id
