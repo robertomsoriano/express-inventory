@@ -5,12 +5,13 @@ const auth = require("../../middleware/auth");
 const Item = require("../../models/Item");
 // CartItem Model
 const CartItem = require("../../models/CartItem");
-
+const CartVehicle = require("../../models/CartVehicle");
 // Helper Functions
 // Check If Enough Items in Stock
 const checkStock = async (itemID, quantityRequested) => {
   let itemToCheck = await Item.findById(itemID);
   let quantityInCart = await CartItem.findById(itemID);
+  if (!quantityInCart) { return true }
   return (await itemToCheck.item_quantity) > quantityInCart.item_quantity
     ? true
     : false;
@@ -27,6 +28,43 @@ router.get("/", auth, (req, res) => {
       .then((items) => res.send(items));
   } catch (e) {
     return res.status(400).json({ msg: "User's cart is empty" });
+  }
+});
+// @route   GET api/cart-items/vehicle
+// @desc    Get all cartvehicle
+// @access  Private
+router.get("/vehicle", auth, (req, res) => {
+  console.log(`CartItem GET Req at ${Date()}`);
+  try {
+    CartVehicle.find({ user: req.user.id })
+      .then((items) => res.send(items));
+  } catch (e) {
+    return res.status(400).json({ msg: "User's cart is empty" });
+  }
+});
+// @route   POST api/cart-items/vehicle
+// @desc    Create An Vehicle to the Cart
+// @access  Private
+router.post('/vehicle', auth, (req, res) => {
+  try {
+    const newCartVehicle = new CartVehicle({
+      vehicle: req.body,
+      user: req.user.id
+    });
+
+    newCartVehicle.save().then(item => res.json(item)).catch(err => res.status(404).json({ msg: "CartVehicle could not be added." }))
+  } catch (err) {
+    return res.status(404).json({ msg: "CartVehicle could not be added." });
+  }
+});
+// @route   Delete api/cart-items/vehicle
+// @desc    Remove An Vehicle from the Cart
+// @access  Private
+router.delete('/vehicle', auth, async (req, res) => {
+  try {
+    await CartVehicle.deleteMany({ user: req.user.id }).then((res) => res.send([]).catch(err => res.status(404).json({ msg: "CartVehicle could not be deleted." })));
+  } catch (err) {
+    res.status(404).json({ msg: false });
   }
 });
 
@@ -115,6 +153,11 @@ router.put("/delete-item", auth, async (req, res) => {
   } catch (err) {
     res.status(404).json({ msg: false });
   }
+});
+router.delete('/delete-item/:id', auth, (req, res) => {
+  CartItem.findById(req.params.id)
+    .then(item => item.remove().then(() => res.json({ success: true })))
+    .catch(err => res.status(404).json({ success: false, msg: "Are you using a valid item ID?" }));
 });
 
 // @route   DELELTE api/cart-items/empty

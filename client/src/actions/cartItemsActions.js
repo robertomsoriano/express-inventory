@@ -1,17 +1,49 @@
 import axios from "axios";
 import {
-  SET_CART,
+  SET_CART, SET_CART_VEHICLE,
   SET_CART_AMOUNT,
   EMPTY_CART,
   CART_LOADING,
   UPDATE_CART_ITEM,
-  DELETE_CART_ITEM
+  DELETE_CART_ITEM,
+  DELETE_CART_VEHICLE
 } from "../actions/types";
 import { tokenConfig } from "./authActions";
 import {
-  returnErrors
+  returnErrors, clearErrors
   // ,clearErrors
 } from "./errorActions";
+
+export const vehicleForCart = (vehicle) => (dispatch, getState) => {
+  dispatch(setCartLoading());
+  axios
+    .post(`/api/cart-items/vehicle`, vehicle, tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: SET_CART_VEHICLE,
+        payload: res.data
+      });
+    }
+    )
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+export const deleteCartVehicle = () => (dispatch, getState) => {
+  dispatch(setCartLoading());
+  axios
+    .delete(`/api/cart-items/vehicle`, tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: DELETE_CART_VEHICLE,
+        payload: res.data
+      });
+    }
+    )
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
 
 export const setCart = () => (dispatch, getState) => {
   dispatch(setCartLoading());
@@ -30,7 +62,6 @@ export const setCart = () => (dispatch, getState) => {
 
 export const increaseQuantity = (item) => (dispatch, getState) => {
   dispatch(setCartLoading());
-
   axios
     .put(`/api/cart-items/add`, { item }, tokenConfig(getState))
     .then((res) => {
@@ -65,9 +96,8 @@ export const decreaseQuantity = (item) => (dispatch, getState) => {
 
 export const deleteItem = (item) => (dispatch, getState) => {
   dispatch(setCartLoading());
-  Object.assign(item, { book_id: item._id });
   axios
-    .put(`/api/cart-items/delete-item`, { book: item }, tokenConfig(getState))
+    .put(`/api/cart-items/delete-item/${item._id}`, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: DELETE_CART_ITEM,
@@ -97,6 +127,8 @@ export const cartTotal = () => (dispatch, getState) => {
     return 1;
   }
 };
+
+
 
 export const emptyCart = () => (dispatch, getState) => {
   dispatch(setCartLoading());

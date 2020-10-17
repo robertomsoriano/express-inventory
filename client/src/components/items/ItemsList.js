@@ -34,6 +34,7 @@ const ItemsList = (props) => {
   let cart = state.cartItems.cart
   const checkStock = (itemRequested) => {
     let itemInCart = cart.filter(item => item._id === itemRequested._id)
+    if (itemInCart.length === 0) { return true }
     let inQuestion = items.filter(item => item._id === itemRequested._id)
     if ((itemInCart[0].item_quantity + 1) > inQuestion[0].item_quantity) {
       Swal.fire({
@@ -72,7 +73,7 @@ const ItemsList = (props) => {
                     >
                       <thead>
                         <tr>
-                          <th>#</th>
+                          <th>-</th>
 
                           <th>Name</th>
                           <th>Description</th>

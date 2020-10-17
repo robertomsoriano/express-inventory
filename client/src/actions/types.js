@@ -30,9 +30,11 @@ export const BOOKS_LOADING = "BOOKS_LOADING";
 export const BOOKS_FAILURE = "BOOKS_FAILURE";
 // Cart
 export const SET_CART = "SET_CART";
+export const SET_CART_VEHICLE = "SET_CART_VEHICLE";
 export const SET_CART_AMOUNT = "SET_CART_AMOUNT";
 export const UPDATE_CART_ITEM = "UPDATE_CART_ITEM";
 export const DELETE_CART_ITEM = "DELETE_CART_ITEM";
+export const DELETE_CART_VEHICLE = "DELETE_CART_VEHICLE";
 export const EMPTY_CART = "EMPTY_CART";
 export const CART_LOADING = "CART_LOADING";
 //Checkout 
