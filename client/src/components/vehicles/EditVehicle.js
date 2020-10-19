@@ -154,10 +154,10 @@ const EditVehicle = (props) => {
                                 value={`${newName}`}
                                 onChange={e => setNewName(e.target.value)}
                             />
-                            <h5>Vehicle Number</h5>
+                            <h5>Vehicle Plate</h5>
                             <Input
                                 className=" form-control col-xs-2"
-                                placeholder="Update Vehicle Name"
+                                placeholder="Update Vehicle Plate"
                                 value={`${newNumber}`}
                                 onChange={e => setNewNumber(e.target.value)}
                             />

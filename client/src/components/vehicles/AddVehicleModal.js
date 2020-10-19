@@ -111,10 +111,10 @@ const AddVehicleModal = (props) => {
                                                 value={`${newName}`}
                                                 onChange={e => setNewName(e.target.value)}
                                             />
-                                            <h5>Vehicle Number</h5>
+                                            <h5>Vehicle Plate</h5>
                                             <Input
                                                 className=" form-control col-xs-2"
-                                                placeholder="Enter Vehicle number"
+                                                placeholder="Enter Vehicle Plate"
                                                 value={`${newNumber}`}
                                                 onChange={e => setNewNumber(e.target.value)}
                                             />

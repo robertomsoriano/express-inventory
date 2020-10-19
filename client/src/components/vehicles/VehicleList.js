@@ -48,7 +48,7 @@ const VehicleList = (props) => {
 
                         <Container style={{ marginTop: "5rem" }}>
 
-                            <h2>{`Vehicle List`}</h2>
+                            <h2>{`Vehicle In Use For the Transaction`}</h2>
                             <ListGroup>
                                 <TransitionGroup className="shopping-list">
                                     <CSSTransition timeout={0} classNames="fade">
@@ -62,8 +62,7 @@ const VehicleList = (props) => {
                                                 <thead>
                                                     <tr>
                                                         <th></th>
-                                                        <th>Name</th>
-                                                        <th>Description</th>
+                                                        <th>Vehicle Plate</th>
                                                         {/* <th>Image</th> */}
                                                     </tr>
                                                 </thead>
@@ -101,8 +100,7 @@ const VehicleList = (props) => {
                                                                 </>
                                                             )}
                                                         </th>
-                                                        <td>{vehicleInCart.vehicle_name}</td>
-                                                        <td>{vehicleInCart.vehicle_desc}</td>
+                                                        <td>{vehicleInCart.vehicle_number}</td>
                                                         <td>
                                                             <img
                                                                 src={`${vehicleInCart.vehicle_image}`}
@@ -121,7 +119,7 @@ const VehicleList = (props) => {
                             </ListGroup>
                         </Container>
                     }
-                    <AddVehicleModal />
+                    {/* <AddVehicleModal /> */}
                 </Suspense>
             </>
         )
@@ -154,7 +152,7 @@ const VehicleList = (props) => {
                                                 <tr>
                                                     <th></th>
                                                     <th>Name</th>
-                                                    <th>Description</th>
+                                                    <th>Plate</th>
                                                     {/* <th>Image</th> */}
                                                 </tr>
                                             </thead>
@@ -194,7 +192,7 @@ const VehicleList = (props) => {
                                                                 )}
                                                             </th>
                                                             <td>{vehicle.vehicle_name}</td>
-                                                            <td>{vehicle.vehicle_desc}</td>
+                                                            <td>{vehicle.vehicle_number}</td>
                                                             <td>
                                                                 <img
                                                                     src={`${vehicle.vehicle_image}`}
