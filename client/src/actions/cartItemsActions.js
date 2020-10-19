@@ -1,7 +1,6 @@
 import axios from "axios";
 import {
   SET_CART, SET_CART_VEHICLE,
-  SET_CART_AMOUNT,
   EMPTY_CART,
   CART_LOADING,
   UPDATE_CART_ITEM,
@@ -98,7 +97,7 @@ export const decreaseQuantity = (item) => (dispatch, getState) => {
   axios
     .put(
       `/api/cart-items/decrease`,
-      { item: { ...item } },
+      { item: item },
       tokenConfig(getState)
     )
     .then((res) => {
@@ -126,26 +125,6 @@ export const deleteItem = (item) => (dispatch, getState) => {
       dispatch(returnErrors(err.response.data, err.response.status))
     );
 };
-
-export const cartTotal = () => (dispatch, getState) => {
-  // dispatch(setCartLoading());
-  const items = getState().cart.cart;
-  if (!items) {
-    return 1;
-  } else if (items.length > 0) {
-    let quant = items.map((book) => book.item_total);
-    quant = quant.reduce((acc, curr) => acc + curr);
-    let result = Math.round(quant * 100) / 100;
-    dispatch({
-      type: SET_CART_AMOUNT,
-      payload: result
-    });
-    return;
-  } else {
-    return 1;
-  }
-};
-
 
 
 export const emptyCart = () => (dispatch, getState) => {

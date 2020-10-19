@@ -3,9 +3,12 @@ import { withRouter, Link } from 'react-router-dom'
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 //Components
-import { Container, ListGroup, ListGroupItem, Button, Table } from "reactstrap";
+import { Container, ListGroup, ListGroupItem, Button, Table, Alert } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Swal from "sweetalert2";
+import { increaseQuantity, decreaseQuantity, deleteCartVehicle, cartTotal } from '../../actions/cartItemsActions';
+import { clearErrors } from "../../actions/errorActions";
+import { currentCartTotal } from '../../hooks/currentCartAmount';
 const CartItems = (props) => {
     const dispatch = useDispatch()
     const state = useSelector(state => state)
@@ -13,8 +16,13 @@ const CartItems = (props) => {
     const cartItems = cart.cart
     const vehicleInCart = cart.vehicle ? cart.vehicle : null
     useEffect(() => {
-        console.log(cartItems)
+        dispatch(clearErrors())
     }, [cart]);
+    useEffect(() => {
+        dispatch(clearErrors())
+        // eslint-disable-next-line
+    }, [state.errors]);
+    console.log(cart)
     if (!cartItems || !vehicleInCart) {
         return (
             <>
@@ -27,7 +35,11 @@ const CartItems = (props) => {
     }
     return (
         <>
+
             <Container style={{ marginTop: "5rem" }}>
+                {state.error.msg !== null && (
+                    <Alert color="danger">{state.error.msg.msg}</Alert>
+                )}
                 <h2>Your Current Transaction</h2>
                 {/* Cart Vehicle */}
                 <ListGroup>
@@ -58,12 +70,8 @@ const CartItems = (props) => {
 
                                         </tr>
                                     </thead>
-                                    {/* 
-                                            {vehicles.vehicles.length > 0 &&
-                                                vehicles.vehicles.map((vehicle) => ( */}
                                     <tbody
                                         key={vehicleInCart._id}
-                                        // bgcolor={vehicle.vehicle_quantity <= 0 ? "coral" : "white"}
                                         style={{
                                             backgroundColor: null
                                         }}
@@ -79,7 +87,7 @@ const CartItems = (props) => {
                                                         size="sm"
                                                         outline
                                                         style={{ fontSize: "11px", width: '100px' }}
-                                                        onClick={() => { return }}
+                                                        onClick={() => { dispatch(deleteCartVehicle()) }}
                                                     >
                                                         Remove
                                                     </Button>
@@ -144,7 +152,7 @@ const CartItems = (props) => {
                                                             className="edit-btn"
                                                             size="sm"
                                                             outline
-                                                            onClick={e => { return }}
+                                                            onClick={e => dispatch(decreaseQuantity(item))}
                                                             style={{ fontSize: "10px", margin: "4px" }}
                                                         >
                                                             -
@@ -161,7 +169,7 @@ const CartItems = (props) => {
                                                             className="edit-btn"
                                                             outline
                                                             size="sm"
-                                                            onClick={() => { return }}
+                                                            onClick={() => dispatch(increaseQuantity(item))}
                                                             style={{ fontSize: "10px", margin: "4px" }}
                                                         >
                                                             +
@@ -190,7 +198,7 @@ const CartItems = (props) => {
                     </TransitionGroup>
                 </ListGroup>
                 <ListGroupItem style={{ float: "right" }}>
-                    Subtotal: <strong> $99999</strong> <br />
+                    Subtotal: <strong> ${currentCartTotal(cartItems)}</strong> <br />
                     {/* Subtotal: <strong> $CartTotal</strong> <br /> */}
                     <hr />
                     <Link

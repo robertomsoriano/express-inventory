@@ -40,6 +40,7 @@ export default function (state = initialState, action) {
         cart: action.payload,
         loading: false
       };
+
     case SET_CART_VEHICLE:
       return {
         ...state,

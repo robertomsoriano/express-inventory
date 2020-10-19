@@ -124,7 +124,7 @@ router.put("/add", auth, async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    return res.status(404).json({ msg: false });
+    return res.status(404).json({ msg: "Quantity not increase. Is there enough stock?" });
   }
 });
 
@@ -137,7 +137,7 @@ router.put("/decrease", auth, async (req, res) => {
   //If it falls below one, it will be deleted.
   try {
     await CartItem.findOneAndUpdate(
-      { _id: req.body.item.item_id, user: req.user.id },
+      { _id: req.body.item._id, user: req.user.id },
       {
         $inc: { item_quantity: -1 },
         item_name: req.body.item.item_name,

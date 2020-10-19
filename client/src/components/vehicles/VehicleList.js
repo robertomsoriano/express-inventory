@@ -63,15 +63,11 @@ const VehicleList = (props) => {
                                                     <tr>
                                                         <th></th>
                                                         <th>Vehicle Plate</th>
-                                                        {/* <th>Image</th> */}
+
                                                     </tr>
                                                 </thead>
-                                                {/* 
-                                            {vehicles.vehicles.length > 0 &&
-                                                vehicles.vehicles.map((vehicle) => ( */}
                                                 <tbody
                                                     key={vehicleInCart._id}
-                                                    // bgcolor={vehicle.vehicle_quantity <= 0 ? "coral" : "white"}
                                                     style={{
                                                         backgroundColor: null
                                                     }}
@@ -81,13 +77,10 @@ const VehicleList = (props) => {
                                                             {state.auth.isAuthenticated && (
                                                                 <>
                                                                     <Link
-                                                                        to={{
-                                                                            pathname: `/vehicle/edit/${vehicleInCart._id}`,
-                                                                            state: { vehicleInCart }
-                                                                        }}
+                                                                        to={`/cart`}
                                                                     >
                                                                         <Button className="edit-btn" outline>
-                                                                            View/Edit
+                                                                            Go to Cart
                                     </Button>
                                                                     </Link>
                                                                     <Button
