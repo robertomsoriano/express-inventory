@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
+const ObjectId = require('mongoose').Types.ObjectId;
 const auth = require("../../middleware/auth");
 // Item Model (to check stock)
 const Item = require("../../models/Item");
 // CartItem Model
 const CartItem = require("../../models/CartItem");
-const CartVehicle = require("../../models/CartVehicle");
+const { Vehicle, CartVehicle } = require("../../models/Vehicle");
 // Helper Functions
 // Check If Enough Items in Stock
 const checkStock = async (itemID, quantityRequested) => {
@@ -30,23 +31,29 @@ router.get("/", auth, (req, res) => {
     return res.status(400).json({ msg: "User's cart is empty" });
   }
 });
+
+// Cart Vehicle
+
 // @route   GET api/cart-items/vehicle
-// @desc    Get all cartvehicle
+// @desc    Get The Current Cart Vehicle
 // @access  Private
-router.get("/vehicle", auth, (req, res) => {
-  console.log(`CartItem GET Req at ${Date()}`);
+router.get("/vehicle", auth, async (req, res) => {
+  console.log(`CartVehicle GET Req at ${Date()}`);
   try {
-    CartVehicle.find({ user: req.user.id })
-      .then((items) => res.send(items));
+    let cartVehicle = await CartVehicle.find({ user: req.user.id })
+    let vehicle = await Vehicle.findById(new ObjectId(cartVehicle[0].vehicle))
+    return res.json(await vehicle)
   } catch (e) {
     return res.status(400).json({ msg: "User's cart is empty" });
   }
 });
 // @route   POST api/cart-items/vehicle
-// @desc    Create An Vehicle to the Cart
+// @desc    Create or Replace Cart Vehicle
 // @access  Private
-router.post('/vehicle', auth, (req, res) => {
+router.post('/vehicle', auth, async (req, res) => {
+  console.log(`CartVehicle POST Req at ${Date()}`);
   try {
+    await CartVehicle.deleteMany({ user: req.user.id })
     const newCartVehicle = new CartVehicle({
       vehicle: req.body,
       user: req.user.id
@@ -58,15 +65,19 @@ router.post('/vehicle', auth, (req, res) => {
   }
 });
 // @route   Delete api/cart-items/vehicle
-// @desc    Remove An Vehicle from the Cart
+// @desc    Remove The Current Cart Vehicle
 // @access  Private
 router.delete('/vehicle', auth, async (req, res) => {
+  console.log(`CartVehicle DELETE Req at ${Date()}`);
   try {
-    await CartVehicle.deleteMany({ user: req.user.id }).then((res) => res.send([]).catch(err => res.status(404).json({ msg: "CartVehicle could not be deleted." })));
+    await CartVehicle.deleteMany({ user: req.user.id }).then((item) => res.send([]))
   } catch (err) {
+    console.log(err)
     res.status(404).json({ msg: false });
   }
 });
+
+// End Cart Vehicle
 
 // @route   PUT api/cart-items/add
 // @desc    Add item to cart (or inc quantity)

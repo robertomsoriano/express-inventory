@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require("../../middleware/auth");
 const ItemTransaction = require("../../models/ItemTransaction");
 // Vehicle Model
-const Vehicle = require("../../models/Vehicle");
+const { Vehicle } = require("../../models/Vehicle");
 
 // @route   GET api/vehicles
 // @desc    Get All vehicles

@@ -15,7 +15,7 @@ import {
 } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Swal from "sweetalert2";
-import { vehicleForCart, deleteCartVehicle } from "../../actions/cartItemsActions";
+import { postVehicleForCart, deleteCartVehicle } from "../../actions/cartItemsActions";
 
 
 const VehicleList = (props) => {
@@ -32,7 +32,7 @@ const VehicleList = (props) => {
         console.log(vehicleInCart)
     }, [vehicles, vehicleInCart])
     const addVehicleToCart = (vehicleToAdd) => {
-        dispatch(vehicleForCart(vehicleToAdd))
+        dispatch(postVehicleForCart(vehicleToAdd))
     }
     const checkVehicleID = (vehID) => {
         if (vehicleInCart) {

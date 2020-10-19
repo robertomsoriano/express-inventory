@@ -14,7 +14,23 @@ import {
   // ,clearErrors
 } from "./errorActions";
 
-export const vehicleForCart = (vehicle) => (dispatch, getState) => {
+// Cart Vehicle
+export const setCartVehicle = () => (dispatch, getState) => {
+  dispatch(setCartLoading());
+  axios
+    .get("/api/cart-items/vehicle", tokenConfig(getState))
+    .then((res) => {
+      dispatch({
+        type: SET_CART_VEHICLE,
+        payload: res.data
+      });
+    })
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
+export const postVehicleForCart = (vehicle) => (dispatch, getState) => {
   dispatch(setCartLoading());
   axios
     .post(`/api/cart-items/vehicle`, vehicle, tokenConfig(getState))
@@ -44,6 +60,8 @@ export const deleteCartVehicle = () => (dispatch, getState) => {
       dispatch(returnErrors(err.response.data, err.response.status))
     );
 };
+
+// End cart Vehicle
 
 export const setCart = () => (dispatch, getState) => {
   dispatch(setCartLoading());

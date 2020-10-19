@@ -59,5 +59,23 @@ const VehicleSchema = new Schema({
     type: String
   }
 });
+const CartVehicleSchema = new Schema({
+  vehicle: { type: Schema.Types.ObjectId, ref: 'Vehicle' },
+  user: {
+    type: String,
+    required: true
+  },
+  date_added: {
+    type: Date,
+    default: Date.now
+  }
+});
 
-module.exports = Vehicle = mongoose.model("vehicles", VehicleSchema);
+const Vehicle = mongoose.model("vehicles", VehicleSchema);
+const CartVehicle = mongoose.model("cartVehicle", CartVehicleSchema);
+
+
+module.exports = {
+  Vehicle,
+  CartVehicle
+}
