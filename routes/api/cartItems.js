@@ -41,10 +41,15 @@ router.get("/vehicle", auth, async (req, res) => {
   console.log(`CartVehicle GET Req at ${Date()}`);
   try {
     let cartVehicle = await CartVehicle.find({ user: req.user.id })
-    let vehicle = await Vehicle.findById(new ObjectId(cartVehicle[0].vehicle))
-    return res.json(await vehicle)
+    // res.send({ msg: "Cart Vehicle Empty." })
+    if (!cartVehicle.length) { return }
+    else {
+      let vehicle = await Vehicle.findById(new ObjectId(cartVehicle[0].vehicle))
+      return res.json(await vehicle)
+    }
   } catch (e) {
-    return res.status(400).json({ msg: "User's cart is empty" });
+    console.log(e)
+    return res.status(404).json({ msg: "No Cart Vehicle found." });
   }
 });
 // @route   POST api/cart-items/vehicle
@@ -59,8 +64,13 @@ router.post('/vehicle', auth, async (req, res) => {
       user: req.user.id
     });
 
-    newCartVehicle.save().then(item => res.json(item)).catch(err => res.status(404).json({ msg: "CartVehicle could not be added." }))
+    // newCartVehicle.save().then(item => res.json(item)).catch(err => res.status(404).json({ msg: "CartVehicle could not be added." }))
+    let cartVeh = await newCartVehicle.save()
+    let vehicle = await Vehicle.findById(new ObjectId(cartVeh.vehicle))
+    res.json(await vehicle)
+
   } catch (err) {
+    console.log(err)
     return res.status(404).json({ msg: "CartVehicle could not be added." });
   }
 });

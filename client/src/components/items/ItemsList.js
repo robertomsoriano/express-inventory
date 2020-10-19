@@ -73,7 +73,7 @@ const ItemsList = (props) => {
                     >
                       <thead>
                         <tr>
-                          <th>-</th>
+                          <th></th>
 
                           <th>Name</th>
                           <th>Description</th>

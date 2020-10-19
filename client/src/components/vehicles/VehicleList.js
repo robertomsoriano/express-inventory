@@ -40,30 +40,105 @@ const VehicleList = (props) => {
         }
     }
 
-    // if (vehicleInCart) {
-    //     return (
-    //         <>
-    //             <Suspense fallback={<Spinner color="dark" />}>
-    //                 <div>
-    //                     Removed Vehicle
-    //         </div>
-    //             </Suspense>
-    //         </>
-    //     )
-    // }
+    if (vehicleInCart) {
+        return (
+            <>
+                <Suspense fallback={<Spinner color="dark" />}>
+                    {
+
+                        <Container style={{ marginTop: "5rem" }}>
+
+                            <h2>{`Vehicle List`}</h2>
+                            <ListGroup>
+                                <TransitionGroup className="shopping-list">
+                                    <CSSTransition timeout={0} classNames="fade">
+                                        <ListGroupItem>
+                                            <Table
+                                                hover
+                                                responsive
+                                                borderless
+                                                style={{ overflowX: "auto" }}
+                                            >
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Name</th>
+                                                        <th>Description</th>
+                                                        {/* <th>Image</th> */}
+                                                    </tr>
+                                                </thead>
+                                                {/* 
+                                            {vehicles.vehicles.length > 0 &&
+                                                vehicles.vehicles.map((vehicle) => ( */}
+                                                <tbody
+                                                    key={vehicleInCart._id}
+                                                    // bgcolor={vehicle.vehicle_quantity <= 0 ? "coral" : "white"}
+                                                    style={{
+                                                        backgroundColor: null
+                                                    }}
+                                                >
+                                                    <tr>
+                                                        <th scope="row">
+                                                            {state.auth.isAuthenticated && (
+                                                                <>
+                                                                    <Link
+                                                                        to={{
+                                                                            pathname: `/vehicle/edit/${vehicleInCart._id}`,
+                                                                            state: { vehicleInCart }
+                                                                        }}
+                                                                    >
+                                                                        <Button className="edit-btn" outline>
+                                                                            View/Edit
+                                    </Button>
+                                                                    </Link>
+                                                                    <Button
+                                                                        className="edit-btn"
+                                                                        outline
+                                                                        onClick={() => dispatch(deleteCartVehicle())}
+                                                                    >
+                                                                        Delete from Cart
+                                                                </Button>
+                                                                </>
+                                                            )}
+                                                        </th>
+                                                        <td>{vehicleInCart.vehicle_name}</td>
+                                                        <td>{vehicleInCart.vehicle_desc}</td>
+                                                        <td>
+                                                            <img
+                                                                src={`${vehicleInCart.vehicle_image}`}
+                                                                alt={vehicleInCart.vehicle_name}
+                                                                width="100px"
+                                                                height="100px"
+                                                            />
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                {/* ))} */}
+                                            </Table>
+                                        </ListGroupItem>
+                                    </CSSTransition>
+                                </TransitionGroup>
+                            </ListGroup>
+                        </Container>
+                    }
+                    <AddVehicleModal />
+                </Suspense>
+            </>
+        )
+    }
     return (
         <>
             <Suspense fallback={<Spinner color="dark" />}>
                 {
 
                     <Container style={{ marginTop: "5rem" }}>
-                        <Button
+                        {/* <Button
                             className="edit-btn"
                             outline
                             onClick={() => dispatch(deleteCartVehicle())}
                         >
                             Delete
-</Button>
+                        </Button> */}
                         <h2>{`Vehicle List`}</h2>
                         <ListGroup>
                             <TransitionGroup className="shopping-list">
@@ -77,7 +152,7 @@ const VehicleList = (props) => {
                                         >
                                             <thead>
                                                 <tr>
-                                                    <th>-</th>
+                                                    <th></th>
                                                     <th>Name</th>
                                                     <th>Description</th>
                                                     {/* <th>Image</th> */}

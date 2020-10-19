@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 // import store from "./store";
 import { loadUser } from "./actions/authActions";
-import { setCart } from "./actions/cartItemsActions";
+import { setCart, setCartVehicle } from "./actions/cartItemsActions";
 // CSS
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'semantic-ui-css/semantic.min.css'
@@ -26,6 +26,7 @@ export const App = () => {
     useEffect(() => {
         dispatch(loadUser())
         dispatch(setCart())
+        dispatch(setCartVehicle())
     }, [])
 
     if (!auth.isAuthenticated) {

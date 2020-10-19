@@ -43,7 +43,7 @@ export default function (state = initialState, action) {
     case SET_CART_VEHICLE:
       return {
         ...state,
-        vehicle: action.payload.vehicle,
+        vehicle: action.payload,
         loading: false
       };
     case DELETE_CART_ITEM:
