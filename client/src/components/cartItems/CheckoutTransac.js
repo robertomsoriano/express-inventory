@@ -39,30 +39,25 @@ const CheckoutTransac = (props) => {
 
     //Apply a discount
     const applyDiscount = (total, percent = 0) => {
-
-        let subtotal = (total * (percent / 100))
-        console.log(subtotal)
-        setDiscount(subtotal)
+        if (newType === "internal") {
+            setDiscount(0)
+            return
+        }
+        let discounted = (total * (percent / 100))
+        setDiscount(discounted)
         return
     }
     // Calculate Taxes
-    const calcTaxes = (total, percentage = 0.0625) => {
+    const calcTaxes = (subtotal, taxRate = 0.0625) => {
+        if (newType === "internal") { return 0 }
         if (applySale) {
-            return Math.round((total - discount) * percentage * 100) / 100
+            return Math.round((subtotal - discount) * taxRate * 100) / 100
         } else {
-            return Math.round(total * percentage * 100) / 100
+            return Math.round(subtotal * taxRate * 100) / 100
         }
 
     }
-    // Calculate Grand Total
-    const grandTotal = (total, discount) => {
-        if (applySale) {
-            return (((total - discount) + calcTaxes()).toFixed(2))
-        }
-        else {
-            return ((total + calcTaxes()).toFixed(2))
-        }
-    };
+
     const [user, handleChange] = useForm({
         name: "",
         phone: "",
@@ -78,10 +73,10 @@ const CheckoutTransac = (props) => {
     useEffect(() => {
 
         // eslint-disable-next-line
-    }, []);
+    }, [newType]);
 
     // Post Transaction
-    const onSubmit = e => {
+    const onSubmit = (e, newType, user, vehicleInCart, cartItems, subtotal, applySale = false, applyDiscount = 0, calcTaxes = 0, grandTotal = 0) => {
         e.preventDefault();
         // Set Transaction object
         const sendTrans = async () => {
@@ -94,20 +89,44 @@ const CheckoutTransac = (props) => {
                 return;
             } else {
                 try {
-                    await dispatch(postTransaction({
-                        transac_type: newType,
-                        transac_operator: user.operator,
-                        transac_customer: { name: user.name, phone: user.phone, email: user.email },
-                        transac_vehicle: vehicleInCart,
-                        transac_items: cartItems,
-                        sale_transac: applySale,
-                        transac_subtotal: 0,
-                        // transac_discount: applyDiscount(0, 0),
-                        // transac_taxes: calcTaxes(0, 0),
-                        // transac_total: grandTotal(0, 0),
-                        amount_received: user.amountReceived,
-                        transac_message: user.message,
-                    }))
+                    if (newType === "internal") {
+                        await dispatch(postTransaction({
+                            transaction: {
+                                transac_type: newType,
+                                transac_operator: user.operator,
+                                transac_customer: {},
+                                transac_vehicle: vehicleInCart,
+                                transac_items: cartItems,
+                                sale_transac: applySale,
+                                transac_subtotal: subtotal,
+                                transac_discount: 0,
+                                transac_taxes: 0,
+                                transac_total: subtotal,
+                                amount_received: 0,
+                                transac_message: user.message,
+                            }
+                        })
+                        )
+                    }
+                    else if (newType === "external") {
+                        await dispatch(postTransaction({
+                            transaction: {
+                                transac_type: newType,
+                                transac_operator: user.operator,
+                                transac_customer: { name: user.name, phone: user.phone, email: user.email },
+                                transac_vehicle: vehicleInCart,
+                                transac_items: cartItems,
+                                sale_transac: applySale,
+                                transac_subtotal: subtotal,
+                                transac_discount: discount,
+                                transac_taxes: calcTaxes,
+                                transac_total: grandTotal,
+                                amount_received: user.amountReceived,
+                                transac_message: user.message,
+                            }
+                        })
+                        )
+                    }
                 } catch (err) {
                     console.log(err)
                 }
@@ -133,7 +152,9 @@ const CheckoutTransac = (props) => {
             >
                 <Col xs="12">
                     <h4>Checkout</h4>
-                    <Form onSubmit={onSubmit} style={{ marginTop: "2rem" }}>
+                    <Form onSubmit={(e) => {
+                        newType === 'external' ? onSubmit(e, newType, user, vehicleInCart, cartItems, currentCartTotal(cartItems), applySale, discount, calcTaxes(currentCartTotal(cartItems)), (currentCartTotal(cartItems) + calcTaxes(currentCartTotal(cartItems))).toFixed(2)) : onSubmit(e, newType, user, vehicleInCart, cartItems, currentCartTotal(cartItems))
+                    }} style={{ marginTop: "2rem" }}>
                         <FormGroup>
                             <section
                                 style={{
@@ -187,11 +208,11 @@ const CheckoutTransac = (props) => {
                                             value={user.phone}
                                             onChange={handleChange}
                                         />
-                                        <Label for="received">Amount Received</Label>
+                                        <Label for="amountReceived">Amount Received</Label>
                                         <Input
                                             type="number"
-                                            name="received"
-                                            id="received"
+                                            name="amountReceived"
+                                            id="amountReceived"
                                             placeholder="Amount Received from customer"
                                             className="mb-3"
                                             value={user.amountReceived}
@@ -221,7 +242,7 @@ const CheckoutTransac = (props) => {
                                     required
                                 />
                                 {newType === 'external' && (<Segment compact>
-                                    <Checkbox toggle checked={applySale} onChange={() => setApplySale(!applySale)} label='Apply Sale Price' />
+                                    <Checkbox toggle checked={applySale} onChange={() => setApplySale(!applySale)} label='Apply Discount' />
                                     {applySale && <>
                                         <span className='form-inline'>
                                             <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
@@ -235,7 +256,7 @@ const CheckoutTransac = (props) => {
                                                     onChange={handleChange}
                                                 />
                                             </FormGroup>
-                                            <Button onClick={() => applyDiscount()}>Apply Discount</Button>
+                                            <Button onClick={() => applyDiscount(currentCartTotal(cartItems), user.percentage)}>Apply Discount</Button>
                                         </span>
                                     </>}
 
@@ -244,18 +265,20 @@ const CheckoutTransac = (props) => {
                             </section>
 
                             <ListGroupItem style={{ float: "right", marginBottom: "1rem" }}>
-                                Subtotal: <strong> ${9999999}</strong>
-                                <br />
-                                {discount > 0 && applySale && <><span>Discount: <strong><del>${discount.toFixed(2)}</del></strong></span><br /></>}
+                                {newType === 'external' && (<>Subtotal: <strong> ${currentCartTotal(cartItems)}</strong>
+                                    <br /></>)}
+                                {newType === 'external' && discount > 0 && applySale && <><span>Discount: <strong><del>${discount.toFixed(2)}</del></strong></span><br /></>}
 
-                                Taxes (6.25%):{" "}
-                                <strong>
-                                    {" "}
-                                    ${calcTaxes()}
-                                </strong>{" "}
-                                <br />
-                                <hr />
-                                Grand Total: <strong> ${grandTotal()}</strong> <br />
+                                {newType === 'external' &&
+                                    (<>
+                                        Taxes(6.25 %): {" "}
+                                        <strong>
+                                            {" "}
+                                            ${calcTaxes(currentCartTotal(cartItems))}
+                                        </strong>{" "}
+                                        <br />
+                                        <hr /></>)}
+                                Grand Total: <strong> ${newType === 'internal' ? currentCartTotal(cartItems) : applySale ? ((currentCartTotal(cartItems) - discount) + calcTaxes(currentCartTotal(cartItems))).toFixed(2) : (currentCartTotal(cartItems) + calcTaxes(currentCartTotal(cartItems))).toFixed(2)}</strong> <br />
                             </ListGroupItem>
                             <Button color="dark" style={{ marginTop: "0rem" }} block>
                                 Confirm Transaction

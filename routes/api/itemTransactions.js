@@ -4,11 +4,12 @@ const auth = require("../../middleware/auth");
 const ItemTransaction = require("../../models/ItemTransaction");
 const Item = require("../../models/Item");
 const CartItem = require("../../models/CartItem");
+const { CartVehicle } = require("../../models/Vehicle");
 // @route   POST /item-checkout
 // @desc    Process item-transactions
 // @access  Private
 
-router.post("/", auth, (req, res) => {
+router.post("/", auth, async (req, res) => {
   // Checkout submission will log a trasaction
   let newTransaction = new ItemTransaction({
     transac_type: req.body.transaction.transac_type,
@@ -36,9 +37,12 @@ router.post("/", auth, (req, res) => {
         ItemToUpdate.save();
       });
     });
-    newTransaction.save().then((trans) => res.json(trans));
+    CartVehicle.deleteMany({ user: req.user.id }).then(item => console.log(`Cart Vehicle cleared`))
+    CartItem.deleteMany({ user: req.user.id }).then(item => console.log(`Cart cleared`))
+    newTransaction.save().then(async (trans) => res.json(trans));
     return;
   } catch (err) {
+    console.log(err)
     return res.status(425).json({
       msg: "Transaction not valid. Are you ordering more books than available?"
     });

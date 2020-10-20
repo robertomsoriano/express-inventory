@@ -29,7 +29,6 @@ const VehicleList = (props) => {
         dispatch(getVehicles())
     }, [])
     useEffect(() => {
-        console.log(vehicleInCart)
     }, [vehicles, vehicleInCart])
     const addVehicleToCart = (vehicleToAdd) => {
         dispatch(postVehicleForCart(vehicleToAdd))

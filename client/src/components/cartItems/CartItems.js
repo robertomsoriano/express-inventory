@@ -23,7 +23,6 @@ const CartItems = (props) => {
         dispatch(clearErrors())
         // eslint-disable-next-line
     }, [state.errors]);
-    console.log(cart)
     if (!cartItems || !vehicleInCart) {
         return (
             <>
