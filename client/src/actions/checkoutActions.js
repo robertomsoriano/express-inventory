@@ -12,28 +12,29 @@ import {
 } from "./errorActions";
 import Swal from 'sweetalert2'
 export const postTransaction = (data) => (dispatch, getState) => {
+  console.log(data)
   dispatch(setCheckoutLoading());
-  axios
-    .post("/api/checkout", data, tokenConfig(getState))
-    .then(res => {
-      dispatch({
-        type: POST_TRANSACTION,
-        payload: res.data
-      });
-      axios
-        .post(`/api/cart/empty`, { action: 'empty cart' }, tokenConfig(getState))
-    })
-    .catch(err => {
-      Swal.fire({
-        title: 'Could not complete Transaction',
-        text: err.response.data.msg,
-        icon: 'error',
-        confirmButtonColor: '#3085d6',
-        footer: '<a href="/books">Check inventory</a>'
-      })
-      dispatch(returnErrors(err.response.data, err.response.status))
-    }
-    );
+  // axios
+  //   .post("/api/item-checkout", data, tokenConfig(getState))
+  //   .then(res => {
+  //     dispatch({
+  //       type: POST_TRANSACTION,
+  //       payload: res.data
+  //     });
+  //     axios
+  //       .post(`/api/cart-items/empty`, { action: 'empty cart' }, tokenConfig(getState))
+  //   })
+  //   .catch(err => {
+  //     Swal.fire({
+  //       title: 'Could not complete Transaction',
+  //       text: err.response.data.msg,
+  //       icon: 'error',
+  //       confirmButtonColor: '#3085d6',
+  //       footer: '<a href="/">Check inventory</a>'
+  //     })
+  //     dispatch(returnErrors(err.response.data, err.response.status))
+  //   }
+  //   );
 };
 export const setInvoice = (trans) => dispatch => {
   dispatch(setCheckoutLoading(trans));

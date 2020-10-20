@@ -17,6 +17,7 @@ const CartItems = (props) => {
     const vehicleInCart = cart.vehicle ? cart.vehicle : null
     useEffect(() => {
         dispatch(clearErrors())
+        // eslint-disable-next-line
     }, [cart]);
     useEffect(() => {
         dispatch(clearErrors())
@@ -199,18 +200,6 @@ const CartItems = (props) => {
                 </ListGroup>
                 <ListGroupItem style={{ float: "right" }}>
                     Subtotal: <strong> ${currentCartTotal(cartItems)}</strong> <br />
-                    {/* Subtotal: <strong> $CartTotal</strong> <br /> */}
-                    <hr />
-                    <Link
-                        to={{
-                            pathname: `/`,
-                            // state: { item }
-                        }}
-                    >
-                        <Button style={{ textDecoration: "none" }}>
-                            Proceed to Checkout
-            </Button>
-                    </Link>
                 </ListGroupItem>
                 <ListGroupItem style={{ float: "left" }}>
                     <Link to={"/"}>

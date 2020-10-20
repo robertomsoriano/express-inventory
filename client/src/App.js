@@ -20,7 +20,7 @@ import { Container } from "reactstrap";
 import { Spinner } from "react-bootstrap";
 import EditItem from './components/items/EditItem';
 import EditVehicle from './components/vehicles/EditVehicle';
-import CartItems from './components/cartItems/CartItems';
+import { Cart } from './components/cartItems/Cart';
 export const App = () => {
     const dispatch = useDispatch()
     const auth = useSelector(state => state.auth)
@@ -70,7 +70,7 @@ export const App = () => {
                         <Route
                             path="/cart"
                             exact
-                            render={(props) => <CartItems {...props} />}
+                            render={(props) => <Cart {...props} />}
                         />
                     </Switch>
                 </Container>
