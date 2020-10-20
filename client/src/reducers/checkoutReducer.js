@@ -7,6 +7,7 @@ import {
 
 
 const initialState = {
+  posted: false,
   invoice: null,
   loading: false
 };
@@ -15,14 +16,11 @@ export default function (state = initialState, action) {
     case POST_TRANSACTION:
       return {
         ...state,
+        posted: true,
         invoice: action.payload,
         loading: false
       };
-    case SET_CHECKOUT_LOADING:
-      return {
-        ...state,
-        loading: true
-      };
+
     case SET_INVOICE:
       return {
         ...state,
@@ -35,6 +33,11 @@ export default function (state = initialState, action) {
         invoice: null,
         loading: false
       }
+    case SET_CHECKOUT_LOADING:
+      return {
+        ...state,
+        loading: true
+      };
     default:
       return state;
   }

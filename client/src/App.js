@@ -14,16 +14,17 @@ import "./components/checkout/invoice.css";
 
 // Components
 import MyNavbar from "./components/MyNavbar";
-import ItemsList from "./components/items/ItemsList";
-
 import { Container } from "reactstrap";
 import { Spinner } from "react-bootstrap";
+import ItemsList from "./components/items/ItemsList";
 import EditItem from './components/items/EditItem';
 import EditVehicle from './components/vehicles/EditVehicle';
 import { Cart } from './components/cartItems/Cart';
 export const App = () => {
     const dispatch = useDispatch()
     const auth = useSelector(state => state.auth)
+    const state = useSelector((state) => state);
+    let cart = state.cartItems.cart
     useEffect(() => {
         dispatch(loadUser())
         dispatch(setCart())
@@ -56,7 +57,7 @@ export const App = () => {
                 <MyNavbar />
                 <Container>
                     <Switch>
-                        <Route path="/" exact render={() => <ItemsList />} />
+                        <Route path="/" exact render={() => <ItemsList cart={cart} />} />
                         <Route
                             path="/vehicle/edit/:id"
                             exact
@@ -69,6 +70,11 @@ export const App = () => {
                         />
                         <Route
                             path="/cart"
+                            exact
+                            render={(props) => <Cart {...props} />}
+                        />
+                        <Route
+                            path="/dashboard"
                             exact
                             render={(props) => <Cart {...props} />}
                         />

@@ -31,8 +31,10 @@ const ItemsList = (props) => {
     // eslint-disable-next-line
   }, [state]);
   let items = state.items.items;
-  let cart = state.cartItems.cart
+  let cart = props.cart ? props.cart : state.cartItems.cart
   const checkStock = (itemRequested) => {
+    // if cart is empty, Return
+    if (!cart.length) { return true }
     let itemInCart = cart.filter(item => item._id === itemRequested._id)
     if (itemInCart.length === 0) { return true }
     let inQuestion = items.filter(item => item._id === itemRequested._id)

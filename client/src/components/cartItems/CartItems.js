@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Container, ListGroup, ListGroupItem, Button, Table, Alert } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Swal from "sweetalert2";
-import { increaseQuantity, decreaseQuantity, deleteCartVehicle, cartTotal } from '../../actions/cartItemsActions';
+import { increaseQuantity, decreaseQuantity, deleteCartVehicle, cartTotal, deleteItem } from '../../actions/cartItemsActions';
 import { clearErrors } from "../../actions/errorActions";
 import { currentCartTotal } from '../../hooks/currentCartAmount';
 const CartItems = (props) => {
@@ -105,7 +105,7 @@ const CartItems = (props) => {
                     </TransitionGroup>
                 </ListGroup>
                 {/* End Cart Vehicle */}
-                <ListGroup>
+                {cartItems.length && (<><ListGroup>
                     <TransitionGroup className="shopping-list">
                         <CSSTransition timeout={0} classNames="fade">
                             <ListGroupItem>
@@ -181,7 +181,7 @@ const CartItems = (props) => {
                                                         color="danger"
                                                         size="sm"
                                                         outline
-                                                        onClick={e => { return }}
+                                                        onClick={e => dispatch(deleteItem(item))}
                                                         style={{ fontSize: "11px", margin: "2px" }}
                                                     >
                                                         &times; remove
@@ -197,9 +197,9 @@ const CartItems = (props) => {
                         </CSSTransition>
                     </TransitionGroup>
                 </ListGroup>
-                <ListGroupItem style={{ float: "right" }}>
-                    Subtotal: <strong> ${currentCartTotal(cartItems)}</strong> <br />
-                </ListGroupItem>
+                    <ListGroupItem style={{ float: "right" }}>
+                        Subtotal: <strong> ${currentCartTotal(cartItems)}</strong> <br />
+                    </ListGroupItem></>)}
                 <ListGroupItem style={{ float: "left" }}>
                     <Link to={"/"}>
                         <Button>Go back Home</Button>

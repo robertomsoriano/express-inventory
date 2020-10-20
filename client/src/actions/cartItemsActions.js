@@ -114,7 +114,7 @@ export const decreaseQuantity = (item) => (dispatch, getState) => {
 export const deleteItem = (item) => (dispatch, getState) => {
   dispatch(setCartLoading());
   axios
-    .put(`/api/cart-items/delete-item/${item._id}`, tokenConfig(getState))
+    .delete(`/api/cart-items/delete-item/${item._id}`, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: DELETE_CART_ITEM,

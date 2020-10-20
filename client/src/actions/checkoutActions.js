@@ -3,7 +3,9 @@ import {
   POST_TRANSACTION,
   SET_CHECKOUT_LOADING,
   SET_INVOICE,
-  CLEAR_INVOICE
+  CLEAR_INVOICE,
+  DELETE_CART_VEHICLE,
+  EMPTY_CART
 } from "../actions/types";
 import { tokenConfig } from "./authActions";
 import {
@@ -19,7 +21,16 @@ export const postTransaction = (data) => (dispatch, getState) => {
     .then(res => dispatch({
       type: POST_TRANSACTION,
       payload: res.data
-    }))
+    })).then(res => {
+      dispatch({
+        type: DELETE_CART_VEHICLE,
+        payload: []
+      })
+      dispatch({
+        type: EMPTY_CART,
+        payload: []
+      })
+    })
     .catch(err => {
       Swal.fire({
         title: 'Could not complete Transaction',

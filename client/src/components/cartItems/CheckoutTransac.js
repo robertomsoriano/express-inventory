@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter, Link, useHistory } from 'react-router-dom'
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 //Components
@@ -27,6 +27,7 @@ import useForm from '../../hooks/useForm';
 import { postTransaction } from '../../actions/checkoutActions';
 
 const CheckoutTransac = (props) => {
+    let history = useHistory()
     const dispatch = useDispatch()
     const state = useSelector(state => state)
     const cart = useSelector(state => state.cartItems)
@@ -127,6 +128,7 @@ const CheckoutTransac = (props) => {
                         })
                         )
                     }
+                    history.push('/')
                 } catch (err) {
                     console.log(err)
                 }
