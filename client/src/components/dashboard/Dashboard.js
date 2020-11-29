@@ -10,10 +10,7 @@ const Dashboard = () => {
     <div style={{backgroundColor:"background: rgba(211, 211, 211, 0.144)"}}>
       <Header><Icon name='book'/>Dashboard</Header>
       <Divider/>
-      {/* <TransSearch /> */}
-      {/* <SidebarMenu > */}
       <Tab panes={panes} />
-      {/* </SidebarMenu > */}
       </div>
     </>
   );

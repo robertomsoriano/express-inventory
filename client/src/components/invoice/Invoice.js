@@ -1,14 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "reactstrap";
+import { useSelector } from 'react-redux'
+import axios from "axios";
 
-const Invoice = ({ invoiceNumber, user, books, subtotal, taxes, total, sale_price=null, amount_received=null, sale=false, discount=0 }) => {
-  console.log(amount_received)
+// const Invoice = ({ invoiceNumber, user, books, subtotal, taxes, total, sale_price = null, amount_received = null, sale = false, discount = 0 }) => {
+const Invoice = ({ id,
+  invoice_number,
+  transac_type,
+  transac_items,
+  transac_status,
+  transac_operator,
+  transac_vehicle,
+  sale_transac,
+  transac_customer,
+  transac_subtotal,
+  transac_discount,
+  transac_taxes,
+  transac_total,
+  amount_received,
+  transac_message,
+  transac_date }) => {
+
   const PrintPage = () => {
     window.print();
   };
-  const invoiceLogo = "https://ibbreformada.org/wp-content/uploads/2019/06/LogoMakr_0R2xJD.png"
+  const invoiceLogo = "http://www.fivestars.com.my/images/AgentSite/FiveStars/logo.png"
 
-  let totalVariable = sale_price? 'Subtotal': 'Grand Total'
+  let totalVariable = sale_transac ? 'Subtotal' : 'Grand Total'
+
+  // vehicle
+  const vehicles = useSelector(state => state.vehicles)
+  const [car, setCar] = useState(null)
+
+  useEffect(() => {
+    axios.get(`/api/vehicles/single/${transac_vehicle}`).then(data => { console.log(data.data); setCar(data.data) })
+  }, [])
   return (
     <>
       {/* <Button onClick={() => PrintPage()} variant="outline-light">Print Invoice</Button> */}
@@ -30,11 +56,11 @@ const Invoice = ({ invoiceNumber, user, books, subtotal, taxes, total, sale_pric
 
             <div id="identity">
               <p id="address">
-                Libreria Bíblica Sendas Antiguas
+                Five Stars Express
                 <br />
-                290 Water Street, Lawrence MA 01841
+                600 Essex Street, Lawrence MA 01841
                 <br />
-                Phone: (978) 681-7570
+                Phone: (978) 688-8888
               </p>
 
               <div id="logo">
@@ -49,32 +75,37 @@ const Invoice = ({ invoiceNumber, user, books, subtotal, taxes, total, sale_pric
             <div style={{ clear: "both" }} />
 
             <div id="customer">
+              {/* Customer, if external transaction */}
               <p id="customer-title">
-                {user.name}
-                <br />
-                {user.phone}
-                <br />
-                {user.email}
+                {transac_type === "internal" ? transac_type.toUpperCase() : (
+                  <>
+                    <br />
+                    {transac_customer.name}
+                    <br />
+                    {transac_customer.phone}
+                    <br />
+                    {transac_customer.email}
+                  </>
+                )}
               </p>
-
               <table id="meta">
                 <tbody>
                   <tr>
                     <td className="meta-head">Invoice #</td>
                     <td>
-                      <p>{invoiceNumber}</p>
+                      <p>{invoice_number}</p>
                     </td>
                   </tr>
                   <tr>
                     <td className="meta-head">Date</td>
                     <td>
-                      <p id="date">{Date().slice(0, 15)}</p>
+                      <p id="date">{Date(transac_date).slice(0, 15)}</p>
                     </td>
                   </tr>
                   <tr>
                     <td className="meta-head">Amount Due</td>
                     <td>
-                      <div className="due">${total}</div>
+                      <div className="due">${transac_total}</div>
                     </td>
                   </tr>
                   {amount_received && (<tr>
@@ -86,7 +117,28 @@ const Invoice = ({ invoiceNumber, user, books, subtotal, taxes, total, sale_pric
                 </tbody>
               </table>
             </div>
-
+            {car && (
+              <>
+                <table id="vehicle">
+                  <tbody>
+                    <tr>
+                      <th>Vehicle Name</th>
+                      <th>Description</th>
+                      <th>Vehicle Plate</th>
+                      <th>Vehicle Type</th>
+                    </tr>
+                  </tbody>
+                  <tbody>
+                    <tr>
+                      <td>{car.vehicle_name}</td>
+                      <td>{car.vehicle_desc}</td>
+                      <td>{car.vehicle_number}</td>
+                      <td>{car.vehicle_type}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </>
+            )}
             <table id="items">
               <tbody>
                 <tr>
@@ -97,26 +149,26 @@ const Invoice = ({ invoiceNumber, user, books, subtotal, taxes, total, sale_pric
                   <th>Price</th>
                 </tr>
               </tbody>
-              {books.map(book => (
-                <tbody key={book._id}>
+              {transac_items.map(item => (
+                <tbody key={item._id}>
                   <tr className="item-row">
                     <td className="item-name">
                       <div className="delete-wpr">
-                        <p>{book.name}</p>
+                        <p>{item.item_name}</p>
                       </div>
                     </td>
                     <td className="description">
-                      <p>{book.name}</p>
+                      <p>{item.item_type}</p>
                     </td>
                     <td>
-                      <p className="cost">${book.price}</p>
+                      <p className="cost">${item.item_price}</p>
                     </td>
                     <td>
-                      <p className="qty">{book.quantity}</p>
+                      <p className="qty">{item.item_quantity}</p>
                     </td>
                     <td>
                       <span className="price">
-                        ${(book.price * book.quantity).toFixed(2)}
+                        ${(item.item_price * item.item_quantity).toFixed(2)}
                       </span>
                     </td>
                   </tr>
@@ -132,10 +184,10 @@ const Invoice = ({ invoiceNumber, user, books, subtotal, taxes, total, sale_pric
                     Subtotal
                   </td>
                   <td className="total-value">
-                    <div id="subtotal">${subtotal}</div>
+                    <div id="subtotal">${transac_subtotal}</div>
                   </td>
                 </tr>
-                {discount > 0 &&<tr>
+                {transac_discount > 0 && <tr>
                   <td colSpan="2" className="blank">
                     {" "}
                   </td>
@@ -143,7 +195,7 @@ const Invoice = ({ invoiceNumber, user, books, subtotal, taxes, total, sale_pric
                     Discount
                   </td>
                   <td className="total-value">
-                    <div id="subtotal"><del>${discount}</del></div>
+                    <div id="subtotal"><del>${transac_discount.toFixed(2)}</del></div>
                   </td>
                 </tr>}
                 <tr>
@@ -154,7 +206,7 @@ const Invoice = ({ invoiceNumber, user, books, subtotal, taxes, total, sale_pric
                     Sales Tax:
                   </td>
                   <td className="total-value">
-                    <div id="total">${taxes}</div>
+                    <div id="total">${transac_taxes}</div>
                   </td>
                 </tr>
               </tbody>
@@ -168,7 +220,7 @@ const Invoice = ({ invoiceNumber, user, books, subtotal, taxes, total, sale_pric
                     {totalVariable}
                   </td>
                   <td className="total-value balance">
-                    <div className="due">${total}</div>
+                    <div className="due">${transac_total}</div>
                   </td>
                 </tr>
               </tbody>

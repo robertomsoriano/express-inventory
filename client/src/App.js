@@ -10,7 +10,7 @@ import { setCart, setCartVehicle } from "./actions/cartItemsActions";
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'semantic-ui-css/semantic.min.css'
 import "./App.css";
-import "./components/checkout/invoice.css";
+import "./components/invoice/invoice.css";
 
 // Components
 import MyNavbar from "./components/MyNavbar";
@@ -20,6 +20,11 @@ import ItemsList from "./components/items/ItemsList";
 import EditItem from './components/items/EditItem';
 import EditVehicle from './components/vehicles/EditVehicle';
 import { Cart } from './components/cartItems/Cart';
+import ShowInvoice from './components/invoice/ShowInvoice';
+// import TransactionSearch from './components/search/TransactionSearch';
+import TransSearch from './components/search/TransSearch';
+import { getTrans } from './actions/transActions';
+import { getVehicles } from './actions/vehicleActions';
 export const App = () => {
     const dispatch = useDispatch()
     const auth = useSelector(state => state.auth)
@@ -29,6 +34,8 @@ export const App = () => {
         dispatch(loadUser())
         dispatch(setCart())
         dispatch(setCartVehicle())
+        dispatch(getTrans())
+        dispatch(getVehicles())
     }, [])
 
     if (!auth.isAuthenticated) {
@@ -76,7 +83,12 @@ export const App = () => {
                         <Route
                             path="/dashboard"
                             exact
-                            render={(props) => <Cart {...props} />}
+                            render={(props) => <TransSearch {...props} />}
+                        />
+                        <Route
+                            path="/invoice"
+                            exact
+                            render={(props) => <ShowInvoice {...props} />}
                         />
                     </Switch>
                 </Container>

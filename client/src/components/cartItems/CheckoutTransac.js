@@ -128,7 +128,7 @@ const CheckoutTransac = (props) => {
                         })
                         )
                     }
-                    history.push('/')
+                    window.location.replace(`/dashboard`)
                 } catch (err) {
                     console.log(err)
                 }

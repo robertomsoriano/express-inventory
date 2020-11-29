@@ -4,14 +4,15 @@ import {
   SET_TRANS_LOADING
 } from "./types";
 import { tokenConfig } from "./authActions";
-import { returnErrors
+import {
+  returnErrors
   // , clearErrors 
 } from "./errorActions";
 
-export const getTrans = () => (dispatch, getState)=> {
+export const getTrans = () => (dispatch, getState) => {
   dispatch(setTransLoading());
   axios
-    .get("/api/transactions", tokenConfig(getState))
+    .get("/api/item-checkout", tokenConfig(getState))
     .then(res => {
       dispatch({
         type: GET_TRANS,
@@ -24,8 +25,7 @@ export const getTrans = () => (dispatch, getState)=> {
 };
 
 export const setTransLoading = () => {
-    return {
-      type: SET_TRANS_LOADING
-    };
+  return {
+    type: SET_TRANS_LOADING
   };
-  
+};
