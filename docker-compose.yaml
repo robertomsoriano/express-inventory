@@ -1,0 +1,25 @@
+version: '3'
+services:
+  five-express:
+    container_name: five-express
+    environment:
+      - MONGO_URI=${MONGO_URI}
+      - NODE_ENV=${NODE_ENV}
+      - JWT_SECRET=${JWT_SECRET}
+      - ALLOWED_USERS=${ALLOWED_USERS}
+    restart: always
+    build: .
+    # ports:
+    #   - '80:5000'
+    expose:
+      - 80
+    restart: always
+#     volumes: ['./:/var/www/html']
+    environment:
+      VIRTUAL_HOST: express.robertmsoriano, www.express.robertmsoriano
+      LETSENCRYPT_HOST: express.robertmsoriano, www.express.robertmsoriano
+      LETSENCRYPT_EMAIL: robertomsoriano@hotmail.com
+networks:
+  default:
+    external:
+      name: nginx-proxy
