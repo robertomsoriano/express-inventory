@@ -16,8 +16,8 @@ services:
     restart: always
 #     volumes: ['./:/var/www/html']
     environment:
-      VIRTUAL_HOST: express.robertmsoriano, www.express.robertmsoriano
-      LETSENCRYPT_HOST: express.robertmsoriano, www.express.robertmsoriano
+      VIRTUAL_HOST: express.robertmsoriano.com, www.express.robertmsoriano.com
+      LETSENCRYPT_HOST: express.robertmsoriano.com, www.express.robertmsoriano.com
       LETSENCRYPT_EMAIL: robertomsoriano@hotmail.com
 networks:
   default:
