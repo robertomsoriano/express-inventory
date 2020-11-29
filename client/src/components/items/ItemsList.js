@@ -154,6 +154,12 @@ const ItemsList = (props) => {
           </Container>
         }
         <AddItem />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
       </>
     );
 };

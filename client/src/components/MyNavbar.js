@@ -25,7 +25,7 @@ export const MyNavbar = (props) => {
   const user = state.auth.user;
   const auth = state.auth;
   const cart = state.cartItems;
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
   const [isOpen, setIsOpen] = useState(false);
   const cartTotal = () => {
     if (cart.cart.length) {
@@ -46,22 +46,26 @@ export const MyNavbar = (props) => {
   };
   const authLinks = (
     <Fragment>
-      <NavItem>
-        <span className="navbar-text mr-3">
+      <NavItem >
+        <span className="navbar-text mr-3" onClick={() => props.history.push("/")}>
           <strong>{user ? `Welcome ${user.name}` : ""}</strong>
         </span>
       </NavItem>
       <NavItem>
         <NavLink onClick={() => props.history.push("/dashboard")}>
-          Dashboard
+          Transactions
         </NavLink>
       </NavItem>
-      <NavItem>
+      {/* <NavItem>
         <NavLink onClick={() => props.history.push("/parts")}>Parts</NavLink>
-      </NavItem>
-
-      <UncontrolledDropdown nav inNavbar>
-        {/* ----------------- */}
+      </NavItem> */}
+      <NavLink onClick={() => props.history.push("/cart")}>
+        <i className="fa fa-shopping-cart">
+          Cart{cart.cart.length > 0 && `(${cartQuantity()}):`}{" "}
+          {cartTotal()}
+        </i>
+      </NavLink>
+      {/* <UncontrolledDropdown nav inNavbar>
         <DropdownToggle nav caret>
           <i className="fa fa-shopping-cart">Cart {cartQuantity()}</i>
         </DropdownToggle>
@@ -81,7 +85,7 @@ export const MyNavbar = (props) => {
             </NavLink>
           </DropdownItem>
         </DropdownMenu>
-      </UncontrolledDropdown>
+      </UncontrolledDropdown> */}
       <NavItem>
         <Logout />
       </NavItem>
