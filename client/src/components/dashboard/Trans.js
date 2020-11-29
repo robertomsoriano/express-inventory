@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import moment from 'moment'
 import { withRouter } from "react-router-dom";
-import { connect, useSelector, useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { Container, ListGroup, Card, Spinner, Row, Col, Button } from "react-bootstrap";
 import { setInvoice } from "../../actions/checkoutActions";
 import { Grid, DropdownMenu } from "semantic-ui-react";
@@ -11,6 +11,10 @@ const Trans = (props) => {
   const [showInvoice, setShowInvoice] = useState(false)
   const [transac, setTransac] = useState({})
   const trans = useSelector(state => state.trans)
+  const dispatch = useDispatch()
+  const setDisplayInvoice = (trans) => {
+    dispatch(setInvoice(trans))
+  }
   return (
     <>
       {!trans.trans.length === 0 && (
@@ -82,7 +86,7 @@ const Trans = (props) => {
                     <Button variant="light" onClick={() => {
                       setTransac(trans);
                       setShowInvoice(!showInvoice);
-                      props.setInvoice(trans);
+                      setDisplayInvoice(trans)
                       props.history.push({
                         pathname: '/invoice',
                         state: { trans }

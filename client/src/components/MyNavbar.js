@@ -9,10 +9,10 @@ import {
   NavItem,
   NavLink,
   Container,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
+  // UncontrolledDropdown,
+  // DropdownToggle,
+  // DropdownMenu,
+  // DropdownItem
 } from "reactstrap";
 import { useSelector, useDispatch } from "react-redux";
 import RegisterModal from "./auth/RegisterModal";

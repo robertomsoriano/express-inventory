@@ -21,8 +21,7 @@ import EditItem from './components/items/EditItem';
 import EditVehicle from './components/vehicles/EditVehicle';
 import { Cart } from './components/cartItems/Cart';
 import ShowInvoice from './components/invoice/ShowInvoice';
-// import TransactionSearch from './components/search/TransactionSearch';
-import TransSearch from './components/search/TransSearch';
+import TransSearch from './components/dashboard/TransSearch';
 import { getTrans } from './actions/transActions';
 import { getVehicles } from './actions/vehicleActions';
 export const App = () => {

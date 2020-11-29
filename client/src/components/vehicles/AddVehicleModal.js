@@ -7,7 +7,7 @@ import { clearErrors } from "../../actions/errorActions";
 //components
 import {
     Alert, ListGroupItem, Button, ButtonGroup, Input, Spinner,
-    Modal, ModalHeader, ModalBody, Label, Form, FormGroup
+    Modal, ModalHeader, ModalBody, Form, FormGroup
 } from "reactstrap";
 const AddVehicleModal = (props) => {
     const state = useSelector(state => state)

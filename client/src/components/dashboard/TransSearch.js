@@ -24,7 +24,7 @@ class TransSearch extends Component {
       if (this.state.value.length < 1) return this.setState(initialState);
 
       const re = new RegExp(_.escapeRegExp(this.state.value), "i");
-      const isMatch = result => re.test(`${result.transac_status} ${result.transac_type} ${result.transac_items.map(x => x.item_name)} ${result.transac_operator} ${moment(result.transac_date).format("LLL")}`);
+      const isMatch = result => re.test(`${result.transac_status} ${result.transac_type} ${result.transac_customer ? result.transac_customer.name : ''}  ${result.transac_items.map(x => x.item_name)} ${result.transac_operator} ${moment(result.transac_date).format("LLL")}`);
 
       this.setState({
         isLoading: false,
@@ -98,7 +98,6 @@ class TransSearch extends Component {
                     </ListGroup>
                     <Button variant="light" onClick={() => {
                       this.setState({ toggle: !toggle });
-                      // this.props.setInvoice(trans);
                       this.props.history.push({
                         pathname: '/invoice',
                         state: { trans }

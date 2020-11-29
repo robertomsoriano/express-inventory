@@ -1,11 +1,15 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
-import axios from 'axios'
+import { withRouter, Link } from 'react-router-dom'
 import Invoice from './Invoice';
 
 
 const ShowInvoice = (props) => {
-
+    if (!props.location.state) {
+        window.location.replace("/dashboard")
+    }
+    if (!props.location.state.trans) {
+        return (<div><Link to="/dashboard">Load Invoice from History</Link></div>)
+    }
     let { _id,
         invoice_number,
         transac_type,
@@ -22,6 +26,7 @@ const ShowInvoice = (props) => {
         amount_received,
         transac_message,
         transac_date } = props.location.state.trans
+
     return (
         <div>
             <Invoice
